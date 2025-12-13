@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Playlist</title>
+
+    <!-- css link -->
+    <link rel="stylesheet" href="../../style.css">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- lucide icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- nav links -->
+    <nav class="nav flex items-center justify-center w-full p-6">
+        <div class="navlinks flex items-center gap-10">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Browse playlist</a>
+            <a href="#" class="nav-link">Join Room</a>
+        </div>
+    </nav>
+
+    <!-- section -->
+    <section class="w-full h-90vh">
+        <h1 id="playlist-display text-7xl"></h1>
+    </section>
+
+
+
+    <!-- tailwind cdn link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+       
+    <script>
+        const playlistName = localStorage.getItem('playlist name');
+        document.getElementById("playlist-display").textContent = playlistName;
+    </script>
+</body>
+</html>

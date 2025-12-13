@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamspace </title>
+
+    <!-- css link -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+    <!-- lucide icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- firebase js link -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- gspa cdn link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- nav links -->
+    <nav class="nav flex items-center justify-center w-full p-6">
+        <div class="navlinks flex items-center gap-10">
+            <a href="#" class="nav-link" id="home-section-link">Home</a>
+            <a href="#" class="nav-link" id="browse-section-link">Browse playlist</a>
+            <a href="#" class="nav-link" id="join-section-link">Join Room</a>
+        </div>
+    </nav>
+
+
+    <!-- main section -->
+    <section class="hero h-[90vh] w-full flex flex-col items-center justify-center p-3 md:p-0 section" id="mainSection">
+        <div class="floating-element h-[100vh] w-[100vw] absolute top-0 left-0 overflow-hidden">
+
+            <div class="card-wrapper absolute top-[10%] left-[-10%] md:top-[15%] md:left-[10%]" data-speed="2">
+                <img src="assets/img/dave.jpeg" alt="dave cover" class="floating-card-1">
+            </div>
+
+            <div class="card-wrapper absolute top-[78%] left-[-10%] md:top-[80%] md:left-[22%]" data-speed="3">
+                <img src="assets/img/body.jpeg" alt="body cover" class="floating-card-2">
+            </div>
+
+            <div class="card-wrapper absolute right-[-16%] bottom-[6%] md:right-[14%]" data-speed="2.6">
+                <img src="assets/img/burna.jpeg" alt="burna cover" class="floating-card-3">
+            </div>
+
+            <div class="card-wrapper top-[15%] right-[-40px]   md:top-[80px] md:right-[8%] absolute" data-speed="4">
+                <img src="assets/img/tems.jpeg" alt="tems cover" class="floating-card-4">
+            </div>
+        </div>
+
+
+
+        <h1 class="font-bold main-text text-host text-7xl md:text-[144px] relative">JAMSPACE</h1>
+        <p class="text-gray-300 font-inter mt-3 w-full md:w-[600px] text-center sub-text px-2 md:px-0">
+            Build the perfect playlist with friends. Search for songs,
+            add your favorites, and explore what others are listening to—all in real-time.
+        </p>
+
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8 mt-16 main-btns">
+            <a href="#" class="cta-link" id="cta-link">
+                <button class="cta-main cta create-cta" id="cta-main">
+                    Create Playlist
+                </button>
+            </a>
+            <a href="#">
+                <button class="cta-sub cta" id="cta-browse">Browse Playlist</button>
+            </a>
+        </div>
+
+
+
+        <div class="create-playlist-form absolute h-[100vh] w-[100vw] top-0 left-0 flex-col items-center justify-center bg-bg-primary z-100 p-20">
+            <i class="close-create-playlist-btn absolute top-[24px] right-[24px] cursor-pointer" data-lucide="x"></i>
+
+            <h2 class="text-lg text-center">Name your playlist</h2>
+
+            <input type="text" class="playlistname-input mt-9" id="playlistNameInput" placeholder="e.g Playlist 1" name="playlist-input">
+            <p class="playlistNameError mt-2 text-red-400 error"></p>
+
+            <button class="cta cta-main create-playlist-btn mt-8 cursor-pointer">Create Playlist</button>
+        </div>
+    </section>
+
+
+    <!-- crate playlist section -->
+    <section class="create-section w-[100%] h-[100vh] section" id="create-section">
+        <div class="create-header flex flex-col md:flex-row items-start md:items-center justify-between p-2 gap-3 md:p-6 ">
+            <div class="left flex items-end gap-2">
+                <h1 id="playlistname-display" class="text-2xl md:text-4xl"></h1>
+                <div class="flex items-end gap-1 text-sm">
+                    <p class="room-code" id="room-code">123ABC</p>
+                    <i data-lucide="copy" class="scale-[0.5]"></i>
+                </div>
+            </div>
+
+            <div class="search-song-placeholder flex items-center">
+                <div class="input flex items-center gap-2">
+                    <i data-lucide="search" class="text-black"></i>
+                    <input type="text" class="search-input w-[60vw] md:w-[400px]" id="searchSongsInput" placeholder="search for playlist">
+                    <i data-lucide="x" class="text-black" id="empty-search-input"></i>
+                </div>
+
+                <button class="py-1 px-2 bg-red-600 rounded ml-3" id="leaveRoom">
+                    <i data-lucide="log-out"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-header grid grid-cols-2 gap-2 md:hidden px-1 py-2">
+            <span class="text-center w-[100%]" id="searchTabBtn">Search</span>
+            <span class="text-center w-[100%]" id="playlistTabBtn">Playlist</span>
+        </div>
+
+
+        <div class="container p-4 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div id="searchResults" class="relative"></div>
+            <div id="playlistSongs" class="relative"></div>
+
+
+        </div>
+        
+        <button class="cta-main fixed cta bottom-[5%] right-[5%] z-100 shadow" id="doneBtn">
+            Done
+        </button>
+
+
+
+        <div id="info-modal"></div>
+    </section>
+
+
+
+
+    <!-- browse playlist section -->
+    <section class="w-full h-[100vh] section" id="browse-section">
+        <!-- nav links -->
+        <nav class="nav flex items-center justify-center w-full p-6">
+            <div class="navlinks flex items-center gap-10">
+                <a href="#" class="nav-link" id="home-section-link">Home</a>
+                <a href="#" class="nav-link" id="browse-section-link">Browse playlist</a>
+                <a href="#" class="nav-link" id="join-section-link"> Join Room</a>
+            </div>
+        </nav>
+
+        <div class="browse-header w-full flex flex-col items-center justify-center gap-10">
+            <div class="browse-main-text text-center p-3">
+                <h1 class=" text-3xl md:text-5xl font-host">
+                    EXPLORE LIVE JAMS
+                </h1>
+                <p class="text-gray-300 w-full leading mt-2">
+                    Real time collaborative playlist from the community
+                </p>
+            </div>
+
+            <div class="input flex items-center gap-2">
+                <i data-lucide="search" class="text-black"></i>
+                <input type="text" class="search-input w-[70vw] md:w-[400px]" id="browse-playlist-input" placeholder="search for playlist...">
+                <i data-lucide="x" class="text-black cursor-pointer" id="empty-browse-input"></i>
+            </div>
+        </div>
+
+        <div class="browse-container relative mt-10 grid grid-cols-2 px-2 md:px-[5%] md:grid-cols-4 gap-5" id="browse-container"></div>
+
+        <!-- playlist detail modal -->
+        <div class="playlist-detail-modal" style="display: none;">
+            <div class="modal-overlay fixed inset-0 bg-black bg-opacity-80 z-50" id="playlistDetailOverlay"></div>
+            <div class="modal-content fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black rounded-lg p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto z-50">
+                <div class="modal-header flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-3xl font-host" id="detailPlaylistName"></h2>
+                        <p class="text-gray-400" id="detailPlaylistCode"></p>
+                    </div>
+                    <button class="close-detail-modal text-3xl hover:text-gray-400">&times;</button>
+                </div>
+                
+                <div class="modal-actions flex gap-4 mb-6">
+                    <button class="detail-like-btn flex items-center gap-2">
+                        <i data-lucide="heart"></i>
+                        <span class="detail-like-count">0</span> Likes
+                    </button>
+                    <button class="detail-add-spotify-btn flex items-center gap-2">
+                        <i data-lucide="music"></i> Add to Spotify
+                    </button>
+                </div>
+                
+                <div id="detailSongsList" class="space-y-2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- join room section -->
+    <section class="w-full h-[100vh] section" id="joinRoomSection">
+        <div class="joinroom-form-container flex flex-col gap-5 items-center justify-center w-full h-full">
+            <h1 class="font-bold main-text text-host text-7xl md:text-[144px] relative">JOIN ROOM</h1>
+            <p class="text-gray-300 text-center">Enter room code to join others in creating the perfect playlist.</p>
+            <div class="otp-input-container flex gap-2 justify-center">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="0">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="1">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="2">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="3">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="4">
+                <input type="text" maxlength="1" class="otp-box w-12 h-12 text-center text-2xl bg-gray-700 rounded border-2 border-gray-600 focus:border-purple-600 focus:outline-none" data-index="5">
+            </div>
+
+            <p id="roomCodeError" class="text-red-600"></p>
+
+
+            <div class="buttons flex items-center mt-6 gap-6">
+                <button class="cta cta-sub" id="cancel-rrom-btn">Cancel</button>
+                <button class="cta cta-main" id="join-room-btn">Join Room</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    
+    <!-- tailwind cdn link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- main js link -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
