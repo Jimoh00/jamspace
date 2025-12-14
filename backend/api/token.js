@@ -1,14 +1,7 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-
-const app = express();
-app.use(cors());
-
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
-app.get('/api/token', async (req, res) => {
+export default async function handler(req, res) {
+    const CLIENT_ID = process.env.CLIENT_ID;
+    const CLIENT_SECRET = process.env.CLIENT_SECRET;
+    
     try {
         const response = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
@@ -20,14 +13,14 @@ app.get('/api/token', async (req, res) => {
         });
         
         const data = await response.json();
-        res.json({ access_token: data.access_token });
+        
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        
+        res.status(200).json({ access_token: data.access_token });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Failed to get token' });
     }
-});
-
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+}
