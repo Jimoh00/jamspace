@@ -119,7 +119,7 @@ createPlaylistBtn.addEventListener("click", async () => {
 let accessToken = "";
 
 async function getSpotifyToken() {
-    const response = await fetch('http://localhost:3000/api/token');
+    const response = await fetch('https://jamspace-c6rul658t-abdul-rasheeds-projects.vercel.app/api/token');
     const data = await response.json();
     accessToken = data.access_token;
     console.log('Token received:', accessToken);
